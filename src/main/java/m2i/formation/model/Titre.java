@@ -26,7 +26,6 @@ public class Titre {
 	@Column(name = "lien", length = 255)
 	private String lien;
 
-	
 	@ManyToMany(fetch = FetchType.LAZY)
 	@JoinTable(name = "PLAYLIST_TITRE", joinColumns = @JoinColumn(name = "titre_id"), inverseJoinColumns = @JoinColumn(name = "playlist_id"))
 	private List<Playlist> playlists = new ArrayList<>();
