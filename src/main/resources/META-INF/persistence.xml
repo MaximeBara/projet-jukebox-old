@@ -5,7 +5,7 @@
 	xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/persistence http://xmlns.jcp.org/xml/ns/persistence/persistence_2_2.xsd">
 	
 	
-	<persistence-unit name="formation-data" transaction-type="RESOURCE_LOCAL">
+	<persistence-unit name="jukebox-data" transaction-type="RESOURCE_LOCAL">
 		<provider>org.hibernate.jpa.HibernatePersistenceProvider</provider>
 
 <!-- 		Inutile si les classes sont dans le projet courant -->
@@ -17,7 +17,7 @@
 
 		<properties>
 			<property name="javax.persistence.jdbc.driver" value="com.mysql.jdbc.Driver" />
-			<property name="javax.persistence.jdbc.url" value="jdbc:mysql://localhost:3306/formation-data" />
+			<property name="javax.persistence.jdbc.url" value="jdbc:mysql://localhost:3306/jukebox-data" />
 			<property name="javax.persistence.jdbc.user" value="root" />
 			<property name="javax.persistence.jdbc.password" value="root" />
 
