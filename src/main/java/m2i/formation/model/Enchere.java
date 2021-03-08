@@ -10,12 +10,10 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
-import javax.persistence.Table;
 
 @Entity
-@Table(name = "ENCHERE")
-public class EnchereMixte implements IEnchere {
-	
+public abstract class Enchere {
+
 	@Id
 	@GeneratedValue
 	private Long id;
@@ -36,26 +34,21 @@ public class EnchereMixte implements IEnchere {
 	@JoinColumn(name = "titre_id")
 	private Titre titre;
 
-	public EnchereMixte() {
+	public Enchere() {
+		super();
 	}
 
-	public EnchereMixte(Date date, int valeur, TypeMonnaie monnaie) {
+	public Enchere(Date date, int valeur, TypeMonnaie monnaie) {
 		this.date = date;
 		this.valeur = valeur;
 		this.monnaie = monnaie;
 	}
 
-	public EnchereMixte(Long id, Date date, int valeur, TypeMonnaie monnaie) {
+	public Enchere(Long id, Date date, int valeur, TypeMonnaie monnaie) {
 		this.id = id;
 		this.date = date;
 		this.valeur = valeur;
 		this.monnaie = monnaie;
-	}
-
-	@Override
-	public void encherir() {
-		// TODO Auto-generated method stub
-
 	}
 
 	public Long getId() {
@@ -113,11 +106,11 @@ public class EnchereMixte implements IEnchere {
 	public void setTitre(Titre titre) {
 		this.titre = titre;
 	}
-	
+
 	@Override
 	public String toString() {
-		return "EnchereMixte [id=" + id + ", date=" + date + ", valeur=" + valeur + ", monnaie=" + monnaie
+		return "EnchereGratuite [id=" + id + ", date=" + date + ", valeur=" + valeur + ", monnaie=" + monnaie
 				+ ", membre=" + membre + ", jukebox=" + jukebox + ", titre=" + titre + "]";
 	}
-	
+
 }
