@@ -4,16 +4,28 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
+import javax.persistence.ManyToOne;
 import javax.persistence.Table;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
 
 @Entity
 @Table(name = "PLAYLIST")
 public class Playlist {
+	@Id
+	@GeneratedValue
 	private Long id;
+	@Column(name = "nom", length = 20)
 	private String nom;
+	@Temporal(TemporalType.DATE)
+	@Column(name = "dateCreation")
 	private Date dateCreation;
 
+	@ManyToOne()
 	private Membre createur;
 	private List<Titre> titres = new ArrayList<>();
 	private List<Jukebox> jukeboxes = new ArrayList<>();

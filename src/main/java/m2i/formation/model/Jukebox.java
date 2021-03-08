@@ -28,20 +28,23 @@ public class Jukebox {
 	@Column(name = "typeEnchere", length = 10)
 	private TypeEnchere typeEnchere;
 
-	@OneToMany(mappedBy = "JUKEBOX", fetch = FetchType.LAZY)
+	@OneToMany(mappedBy = "jukebox", fetch = FetchType.LAZY)
 	private List<Utilisateur> connectes = new ArrayList<>();
-	
+
 	@ManyToMany(fetch = FetchType.LAZY)
 	@JoinTable(name = "FAVORIS", joinColumns = @JoinColumn(name = "jukebox_id"), inverseJoinColumns = @JoinColumn(name = "membre_id"))
 	private List<Membre> fans = new ArrayList<>();
-	
+
 	@ManyToOne()
-	@JoinColumn(name="administrateur_id")
+	@JoinColumn(name = "administrateur_id")
 	private Administrateur administrateur;
-	
-	
+
+	@ManyToOne()
+	@JoinColumn(name = "playlist_id")
 	private Playlist playlist;
-	private List<IEnchere> encheres = new ArrayList<>();
+	
+	@OneToMany(mappedBy = "jukebox", fetch = FetchType.LAZY)
+	private List<Enchere> encheres = new ArrayList<>();
 
 	public Jukebox() {
 	}
@@ -123,11 +126,11 @@ public class Jukebox {
 		this.playlist = playlist;
 	}
 
-	public List<IEnchere> getEncheres() {
+	public List<Enchere> getEncheres() {
 		return encheres;
 	}
 
-	public void setEncheres(List<IEnchere> encheres) {
+	public void setEncheres(List<Enchere> encheres) {
 		this.encheres = encheres;
 	}
 
