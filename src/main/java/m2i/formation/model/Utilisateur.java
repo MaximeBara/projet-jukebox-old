@@ -1,5 +1,5 @@
 package m2i.formation.model;
 
-public class Utilisateur {
+public abstract class Utilisateur {
 
 }
