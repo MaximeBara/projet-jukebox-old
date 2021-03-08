@@ -8,13 +8,6 @@
 	<persistence-unit name="jukebox-data" transaction-type="RESOURCE_LOCAL">
 		<provider>org.hibernate.jpa.HibernatePersistenceProvider</provider>
 
-<!-- 		Inutile si les classes sont dans le projet courant -->
-<!-- 		<class>m2i.formation.model.Adresse</class> -->
-<!-- 		<class>m2i.formation.model.Formateur</class> -->
-<!-- 		<class>m2i.formation.model.Matiere</class> -->
-<!-- 		<class>m2i.formation.model.Personne</class> -->
-<!-- 		<class>m2i.formation.model.Stagiaire</class> -->
-
 		<properties>
 			<property name="javax.persistence.jdbc.driver" value="com.mysql.jdbc.Driver" />
 			<property name="javax.persistence.jdbc.url" value="jdbc:mysql://localhost:3306/jukebox-data" />
