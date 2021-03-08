@@ -29,12 +29,6 @@ public class EnchereMixte implements IEnchere {
 	}
 
 	@Override
-	public String toString() {
-		return "EnchereMixte [id=" + id + ", date=" + date + ", valeur=" + valeur + ", monnaie=" + monnaie
-				+ ", membre=" + membre + ", jukebox=" + jukebox + ", titre=" + titre + "]";
-	}
-
-	@Override
 	public void encherir() {
 		// TODO Auto-generated method stub
 
@@ -94,6 +88,12 @@ public class EnchereMixte implements IEnchere {
 
 	public void setTitre(Titre titre) {
 		this.titre = titre;
+	}
+	
+	@Override
+	public String toString() {
+		return "EnchereMixte [id=" + id + ", date=" + date + ", valeur=" + valeur + ", monnaie=" + monnaie
+				+ ", membre=" + membre + ", jukebox=" + jukebox + ", titre=" + titre + "]";
 	}
 	
 }

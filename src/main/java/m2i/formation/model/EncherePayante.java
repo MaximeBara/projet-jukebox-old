@@ -29,12 +29,6 @@ public class EncherePayante implements IEnchere {
 	}
 
 	@Override
-	public String toString() {
-		return "EncherePayante [id=" + id + ", date=" + date + ", valeur=" + valeur + ", monnaie=" + monnaie
-				+ ", membre=" + membre + ", jukebox=" + jukebox + ", titre=" + titre + "]";
-	}
-
-	@Override
 	public void encherir() {
 		// TODO Auto-generated method stub
 
@@ -96,4 +90,10 @@ public class EncherePayante implements IEnchere {
 		this.titre = titre;
 	}
 
+	@Override
+	public String toString() {
+		return "EncherePayante [id=" + id + ", date=" + date + ", valeur=" + valeur + ", monnaie=" + monnaie
+				+ ", membre=" + membre + ", jukebox=" + jukebox + ", titre=" + titre + "]";
+	}
+	
 }
