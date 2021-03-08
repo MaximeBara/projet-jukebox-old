@@ -11,7 +11,7 @@ public class Playlist {
 
 	private Membre createur;
 	private List<Titre> titres = new ArrayList<>();
-	private List<Jukebox> jukeboxs = new ArrayList<>();
+	private List<Jukebox> jukeboxes = new ArrayList<>();
 
 	public Playlist() {
 	}
@@ -67,18 +67,18 @@ public class Playlist {
 		this.titres = titres;
 	}
 
-	public List<Jukebox> getJukeboxs() {
-		return jukeboxs;
+	public List<Jukebox> getJukeboxes() {
+		return jukeboxes;
 	}
 
-	public void setJukeboxs(List<Jukebox> jukeboxs) {
-		this.jukeboxs = jukeboxs;
+	public void setJukeboxes(List<Jukebox> jukeboxes) {
+		this.jukeboxes = jukeboxes;
 	}
 
 	@Override
 	public String toString() {
 		return "Playlist [id=" + id + ", nom=" + nom + ", dateCreation=" + dateCreation + ", createur=" + createur
-				+ ", titres=" + titres + ", jukeboxs=" + jukeboxs + "]";
+				+ ", titres=" + titres + ", jukeboxes=" + jukeboxes + "]";
 	}
 
 }
