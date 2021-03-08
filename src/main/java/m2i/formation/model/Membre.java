@@ -1,8 +1,14 @@
 package m2i.formation.model;
 
+import javax.persistence.Column;
+import javax.persistence.Entity;
+
+@Entity
 public class Membre extends Utilisateur {
 
+	@Column(length= 15)
 	private String motDePasse;
+	
 	private int point;
 
 	public Membre() {

@@ -1,7 +1,9 @@
 package m2i.formation.model;
 
-public class Administrateur extends Membre {
+import javax.persistence.Entity;
 
+@Entity
+public class Administrateur extends Membre {
 
 
 	public Administrateur() {

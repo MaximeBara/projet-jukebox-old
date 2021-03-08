@@ -1,15 +1,17 @@
 package m2i.formation.model;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 
-//@Entity
+@Entity
 public abstract class Utilisateur {
 
-	/*@Id
-	@GeneratedValue*/
+	@Id
+	@GeneratedValue
 	private Long id ;
+	@Column(length= 15)
 	private String pseudo ;
 
 	public Utilisateur(){
