@@ -1,19 +1,24 @@
 package m2i.formation.model;
 
-import java.util.Date;
+import java.time.LocalDateTime;
 
+import javax.persistence.DiscriminatorValue;
+import javax.persistence.Entity;
+
+@Entity
+@DiscriminatorValue("P")
 public class EncherePayante extends Enchere {
 
 	public EncherePayante() {
 		super();
 	}
 
-	public EncherePayante(Date date, int valeur) {
-		super(date, valeur, TypeMonnaie.POINT);
+	public EncherePayante(LocalDateTime dateTime, int valeur) {
+		super(dateTime, valeur);
 	}
 
-	public EncherePayante(Long id, Date date, int valeur) {
-		super(id, date, valeur, TypeMonnaie.POINT);
+	public EncherePayante(Long id, LocalDateTime dateTime, int valeur) {
+		super(id, dateTime, valeur);
 	}
 
 }

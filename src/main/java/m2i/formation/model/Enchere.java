@@ -1,29 +1,33 @@
 package m2i.formation.model;
 
-import java.util.Date;
+import java.time.LocalDateTime;
 
 import javax.persistence.Column;
+import javax.persistence.Convert;
+import javax.persistence.DiscriminatorColumn;
 import javax.persistence.Entity;
-import javax.persistence.EnumType;
-import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.Inheritance;
+import javax.persistence.InheritanceType;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.Table;
 
 @Entity
+@Table(name = "ENCHERE")
+@Inheritance(strategy = InheritanceType.SINGLE_TABLE)
+@DiscriminatorColumn(name = "monnaie")
 public abstract class Enchere {
 
 	@Id
 	@GeneratedValue
 	private Long id;
-	@Column(name = "date")
-	private Date date;
+	@Column(name = "dateTime")
+	@Convert(converter = LocalDateTimeConverter.class)
+	private LocalDateTime dateTime;
 	@Column(name = "valeur")
 	private int valeur;
-	@Enumerated(EnumType.STRING)
-	@Column(name = "monnaie")
-	private TypeMonnaie monnaie;
 	@ManyToOne
 	@JoinColumn(name = "membre_id")
 	private Membre membre;
@@ -38,17 +42,15 @@ public abstract class Enchere {
 		super();
 	}
 
-	public Enchere(Date date, int valeur, TypeMonnaie monnaie) {
-		this.date = date;
+	public Enchere(LocalDateTime dateTime, int valeur) {
+		this.dateTime = dateTime;
 		this.valeur = valeur;
-		this.monnaie = monnaie;
 	}
 
-	public Enchere(Long id, Date date, int valeur, TypeMonnaie monnaie) {
+	public Enchere(Long id, LocalDateTime dateTime, int valeur) {
 		this.id = id;
-		this.date = date;
+		this.dateTime = dateTime;
 		this.valeur = valeur;
-		this.monnaie = monnaie;
 	}
 
 	public Long getId() {
@@ -59,12 +61,12 @@ public abstract class Enchere {
 		this.id = id;
 	}
 
-	public Date getDate() {
-		return date;
+	public LocalDateTime getDate() {
+		return dateTime;
 	}
 
-	public void setDate(Date date) {
-		this.date = date;
+	public void setDate(LocalDateTime dateTime) {
+		this.dateTime = dateTime;
 	}
 
 	public int getValeur() {
@@ -73,14 +75,6 @@ public abstract class Enchere {
 
 	public void setValeur(int valeur) {
 		this.valeur = valeur;
-	}
-
-	public TypeMonnaie getMonnaie() {
-		return monnaie;
-	}
-
-	public void setMonnaie(TypeMonnaie monnaie) {
-		this.monnaie = monnaie;
 	}
 
 	public Membre getMembre() {
@@ -109,8 +103,8 @@ public abstract class Enchere {
 
 	@Override
 	public String toString() {
-		return "EnchereGratuite [id=" + id + ", date=" + date + ", valeur=" + valeur + ", monnaie=" + monnaie
-				+ ", membre=" + membre + ", jukebox=" + jukebox + ", titre=" + titre + "]";
+		return "EnchereGratuite [id=" + id + ", dateTime=" + dateTime + ", valeur=" + valeur + ", membre=" + membre
+				+ ", jukebox=" + jukebox + ", titre=" + titre + "]";
 	}
 
 }

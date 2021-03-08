@@ -1,19 +1,24 @@
 package m2i.formation.model;
 
-import java.util.Date;
+import java.time.LocalDateTime;
 
+import javax.persistence.DiscriminatorValue;
+import javax.persistence.Entity;
+
+@Entity
+@DiscriminatorValue("G")
 public class EnchereGratuite extends Enchere {
 
 	public EnchereGratuite() {
 		super();
 	}
 
-	public EnchereGratuite(Date date, int valeur) {
-		super(date, valeur, TypeMonnaie.VOTE);
+	public EnchereGratuite(LocalDateTime dateTime, int valeur) {
+		super(dateTime, valeur);
 	}
 
-	public EnchereGratuite(Long id, Date date, int valeur) {
-		super(id, date, valeur, TypeMonnaie.VOTE);
+	public EnchereGratuite(Long id, LocalDateTime dateTime, int valeur) {
+		super(id, dateTime, valeur);
 	}
 
 }
