@@ -1,9 +1,11 @@
 package m2i.formation.dao.jpa;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.persistence.EntityManager;
 import javax.persistence.EntityTransaction;
+import javax.persistence.TypedQuery;
 
 import m2i.formation.Application;
 import m2i.formation.dao.IUtilisateurDao;
@@ -13,6 +15,9 @@ public class UtilisateurDao implements IUtilisateurDao {
 
 	@Override
 	public List<Utilisateur> findAll() {
+		
+		List<Utilisateur> utilisateurs = new ArrayList<Utilisateur>();
+
 		EntityManager em = null;
 		EntityTransaction tx = null;
 
@@ -21,6 +26,9 @@ public class UtilisateurDao implements IUtilisateurDao {
 			tx = em.getTransaction();
 			tx.begin();
 
+			TypedQuery<Utilisateur> query = em.createQuery("select user from utilisateur user", Utilisateur.class);
+			
+			utilisateurs = query.getResultList();
 			tx.commit();
 		} catch (Exception e) {
 			if (tx != null && tx.isActive()) {
@@ -33,7 +41,7 @@ public class UtilisateurDao implements IUtilisateurDao {
 			}
 		}
 
-		return null;
+		return utilisateurs;
 	}
 
 	@Override
