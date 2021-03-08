@@ -46,8 +46,31 @@ public class EnchereDao implements IEnchereDao {
 
 	@Override
 	public Enchere find(Long id) {
-		// TODO Auto-generated method stub
-		return null;
+		Enchere enchere = null;
+
+		EntityManager em = null;
+		EntityTransaction tx = null;
+
+		try {
+			em = Application.getInstance().getEmf().createEntityManager();
+			tx = em.getTransaction();
+			tx.begin();
+
+			enchere = em.find(Enchere.class, id);
+
+			tx.commit();
+		} catch (Exception e) {
+			if (tx != null && tx.isActive()) {
+				tx.rollback();
+			}
+			e.printStackTrace();
+		} finally {
+			if (em != null) {
+				em.close();
+			}
+		}
+
+		return enchere;
 	}
 
 	@Override
@@ -77,14 +100,57 @@ public class EnchereDao implements IEnchereDao {
 
 	@Override
 	public Enchere update(Enchere obj) {
-		// TODO Auto-generated method stub
-		return null;
+		Enchere enchere = null;
+
+		EntityManager em = null;
+		EntityTransaction tx = null;
+
+		try {
+			em = Application.getInstance().getEmf().createEntityManager();
+			tx = em.getTransaction();
+			tx.begin();
+
+			enchere = em.merge(obj);
+
+			tx.commit();
+		} catch (Exception e) {
+			if (tx != null && tx.isActive()) {
+				tx.rollback();
+			}
+			e.printStackTrace();
+		} finally {
+			if (em != null) {
+				em.close();
+			}
+		}
+
+		return enchere;
 	}
 
 	@Override
 	public void delete(Long id) {
-		// TODO Auto-generated method stub
-		
+		EntityManager em = null;
+		EntityTransaction tx = null;
+
+		try {
+			em = Application.getInstance().getEmf().createEntityManager();
+			tx = em.getTransaction();
+			tx.begin();
+
+			Enchere enchere = em.find(Enchere.class, id);
+			em.remove(enchere);
+
+			tx.commit();
+		} catch (Exception e) {
+			if (tx != null && tx.isActive()) {
+				tx.rollback();
+			}
+			e.printStackTrace();
+		} finally {
+			if (em != null) {
+				em.close();
+			}
+		}
 	}
 
 }

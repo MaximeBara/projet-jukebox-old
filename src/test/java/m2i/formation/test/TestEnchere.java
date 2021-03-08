@@ -34,6 +34,26 @@ public class TestEnchere {
 
 		System.out.println("################");
 
+		System.out.println(enchereDao.find(1L));
+		System.out.println(enchereDao.find(3L));
+		
+		System.out.println("################");
+		
+		eg1.setValeur(10);
+		enchereDao.update(eg1);
+		
+		System.out.println(eg1.toString());
+		
+		System.out.println("################");
+		
+		enchereDao.delete(1L);
+		
+		for (Enchere enchere : enchereDao.findAll()) {
+			System.out.println(enchere.toString());
+		}
+		
+		System.out.println("################");
+		
 	}
 
 }
