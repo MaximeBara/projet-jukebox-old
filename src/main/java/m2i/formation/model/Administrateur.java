@@ -1,10 +1,19 @@
 package m2i.formation.model;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
+import javax.persistence.OneToMany;
+import javax.persistence.Table;
 
 @Entity
+@Table(name = "ADMINISTRATEUR")
 public class Administrateur extends Membre {
 
+	@OneToMany(mappedBy = "administrateur", fetch = FetchType.LAZY)
+	private List<Jukebox> jukeboxes = new ArrayList<Jukebox>();
 
 	public Administrateur() {
 		super();

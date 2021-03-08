@@ -1,19 +1,39 @@
 package m2i.formation.model;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
+import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
+import javax.persistence.ManyToMany;
+import javax.persistence.OneToMany;
+import javax.persistence.Table;
 
 @Entity
+@Table(name = "MEMBRE")
 public class Membre extends Utilisateur {
 
 	@Column(length= 15)
 	private String motDePasse;
 	
 	private int point;
+	
+	@OneToMany(mappedBy = "membre", fetch = FetchType.LAZY)
+	private List<Enchere> encheres = new ArrayList<Enchere>();
+	
+	@OneToMany(mappedBy = "createur", fetch = FetchType.LAZY)
+	private List<Playlist> playlists = new ArrayList<Playlist>();
+	
+	@ManyToMany(fetch = FetchType.LAZY)
+	@JoinTable(name = "FAVORIS", joinColumns = @JoinColumn(name = "membre_id"), inverseJoinColumns = @JoinColumn(name = "jukebox_id"))
+	private List<Jukebox> jukeboxes = new ArrayList<Jukebox>();
+
 
 	public Membre() {
 		super();
-		// TODO Auto-generated constructor stub
 	}
 
 	public Membre(Long id, String pseudo, int point, String motDePasse) {

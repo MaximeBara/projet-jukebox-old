@@ -4,8 +4,12 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import javax.persistence.Table;
 
 @Entity
+@Table(name = "UTILISATEUR")
 public abstract class Utilisateur {
 
 	@Id
@@ -13,7 +17,9 @@ public abstract class Utilisateur {
 	private Long id ;
 	@Column(length= 15)
 	private String pseudo ;
-
+	@ManyToOne
+	@JoinColumn(name="jukebox_id")
+	private Jukebox jukebox;
 	public Utilisateur(){
 		super();
 	}
