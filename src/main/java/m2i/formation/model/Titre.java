@@ -3,6 +3,11 @@ package m2i.formation.model;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.persistence.Entity;
+import javax.persistence.Table;
+
+@Entity
+@Table(name = "TITRE")
 public class Titre {
 	private Long id;
 	private String nom;

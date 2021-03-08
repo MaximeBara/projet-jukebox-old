@@ -3,15 +3,43 @@ package m2i.formation.model;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.FetchType;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
+import javax.persistence.ManyToMany;
+import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
+import javax.persistence.Table;
+
+@Entity
+@Table(name = "JUKEBOX")
 public class Jukebox {
+	@Id
+	@GeneratedValue
 	private Long id;
+	@Column(name = "nom", length = 20)
 	private String nom;
+	@Column(name = "code", length = 20)
 	private String code;
+	@Column(name = "typeEnchere", length = 10)
 	private TypeEnchere typeEnchere;
 
+	@OneToMany(mappedBy = "JUKEBOX", fetch = FetchType.LAZY)
 	private List<Utilisateur> connectes = new ArrayList<>();
+	
+	@ManyToMany(fetch = FetchType.LAZY)
+	@JoinTable(name = "FAVORIS", joinColumns = @JoinColumn(name = "jukebox_id"), inverseJoinColumns = @JoinColumn(name = "membre_id"))
 	private List<Membre> fans = new ArrayList<>();
+	
+	@ManyToOne()
+	@JoinColumn(name="administrateur_id")
 	private Administrateur administrateur;
+	
+	
 	private Playlist playlist;
 	private List<IEnchere> encheres = new ArrayList<>();
 
