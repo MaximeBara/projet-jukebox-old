@@ -3,19 +3,32 @@ package m2i.formation.model;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
+import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
+import javax.persistence.ManyToMany;
 import javax.persistence.Table;
 
 @Entity
 @Table(name = "TITRE")
 public class Titre {
 	@Id
+	@GeneratedValue
 	private Long id;
+	@Column(name = "nom", length = 20)
 	private String nom;
+	@Column(name = "artiste", length = 20)
 	private String artiste;
+	@Column(name = "lien", length = 255)
 	private String lien;
 
+	
+	@ManyToMany(fetch = FetchType.LAZY)
+	@JoinTable(name = "PLAYLIST_TITRE", joinColumns = @JoinColumn(name = "titre_id"), inverseJoinColumns = @JoinColumn(name = "playlist_id"))
 	private List<Playlist> playlists = new ArrayList<>();
 
 	public Titre() {

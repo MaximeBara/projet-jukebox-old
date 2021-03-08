@@ -42,7 +42,7 @@ public class Jukebox {
 	@ManyToOne()
 	@JoinColumn(name = "playlist_id")
 	private Playlist playlist;
-	
+
 	@OneToMany(mappedBy = "jukebox", fetch = FetchType.LAZY)
 	private List<Enchere> encheres = new ArrayList<>();
 
