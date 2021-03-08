@@ -2,14 +2,38 @@ package m2i.formation.model;
 
 import java.util.Date;
 
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import javax.persistence.Table;
+
+@Entity
+@Table(name = "ENCHERE")
 public class EnchereGratuite implements IEnchere {
 
+	@Id
+	@GeneratedValue
 	private Long id;
+	@Column(name = "date")
 	private Date date;
+	@Column(name = "valeur")
 	private int valeur;
+	@Enumerated(EnumType.STRING)
+	@Column(name = "monnaie")
 	private TypeMonnaie monnaie;
+	@ManyToOne
+	@JoinColumn(name = "membre_id")
 	private Membre membre;
+	@ManyToOne
+	@JoinColumn(name = "jukebox_id")
 	private Jukebox jukebox;
+	@ManyToOne
+	@JoinColumn(name = "titre_id")
 	private Titre titre;
 
 	public EnchereGratuite() {
@@ -95,5 +119,5 @@ public class EnchereGratuite implements IEnchere {
 		return "EnchereGratuite [id=" + id + ", date=" + date + ", valeur=" + valeur + ", monnaie=" + monnaie
 				+ ", membre=" + membre + ", jukebox=" + jukebox + ", titre=" + titre + "]";
 	}
-	
+
 }
