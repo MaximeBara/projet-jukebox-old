@@ -27,18 +27,6 @@ public abstract class Utilisateur {
 		this.pseudo = pseudo;
 	}
 	
-	public void estMembre() {
-		
-	}
-	
-	public void estInvite() {
-		
-	}
-
-	public void estAdministrateur() {
-		
-	}
-
 	public Long getId() {
 		return id;
 	}

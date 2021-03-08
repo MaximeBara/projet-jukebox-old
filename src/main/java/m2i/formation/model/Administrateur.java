@@ -2,9 +2,18 @@ package m2i.formation.model;
 
 public class Administrateur extends Membre {
 
+
+
 	public Administrateur() {
 		super();
-		// TODO Auto-generated constructor stub
+	}
+
+	public Administrateur(Long id, String pseudo, int point, String motDePasse) {
+		super(id, pseudo, point, motDePasse);
+	}
+
+	public Administrateur(String pseudo, int point, String motDePasse) {
+		super(pseudo, point, motDePasse);
 	}
 
 	@Override

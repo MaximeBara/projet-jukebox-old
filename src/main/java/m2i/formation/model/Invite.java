@@ -5,17 +5,14 @@ public class Invite extends Utilisateur {
 	
 	public Invite() {
 		super();
-		// TODO Auto-generated constructor stub
 	}
 
 	public Invite(Long id, String pseudo) {
 		super(id, pseudo);
-		// TODO Auto-generated constructor stub
 	}
 
 	public Invite(String pseudo) {
 		super(pseudo);
-		// TODO Auto-generated constructor stub
 	}
 
 	@Override
