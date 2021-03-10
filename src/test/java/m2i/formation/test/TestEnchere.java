@@ -2,7 +2,8 @@ package m2i.formation.test;
 
 import java.time.LocalDateTime;
 
-import m2i.formation.Application;
+import org.springframework.context.support.ClassPathXmlApplicationContext;
+
 import m2i.formation.dao.IEnchereDao;
 import m2i.formation.model.Enchere;
 import m2i.formation.model.EnchereGratuite;
@@ -12,7 +13,9 @@ public class TestEnchere {
 
 	public static void main(String[] args) {
 
-		IEnchereDao enchereDao = Application.getInstance().getEnchereDao();
+		ClassPathXmlApplicationContext context = new ClassPathXmlApplicationContext("application-context.xml");
+
+		IEnchereDao enchereDao = context.getBean(IEnchereDao.class);
 
 		EnchereGratuite eg1 = new EnchereGratuite(LocalDateTime.now(), 1);
 		EnchereGratuite eg2 = new EnchereGratuite(LocalDateTime.now(), 2);
@@ -36,24 +39,25 @@ public class TestEnchere {
 
 		System.out.println(enchereDao.find(1L));
 		System.out.println(enchereDao.find(3L));
-		
+
 		System.out.println("################");
-		
+
 		eg1.setValeur(10);
 		enchereDao.update(eg1);
-		
+
 		System.out.println(eg1.toString());
-		
+
 		System.out.println("################");
-		
+
 		enchereDao.delete(1L);
-		
+
 		for (Enchere enchere : enchereDao.findAll()) {
 			System.out.println(enchere.toString());
 		}
-		
+
 		System.out.println("################");
-		
+
+		context.close();
 	}
 
 }
