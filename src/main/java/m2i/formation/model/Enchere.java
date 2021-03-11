@@ -28,6 +28,8 @@ public abstract class Enchere {
 	private LocalDateTime dateTime;
 	@Column(name = "valeur")
 	private int valeur;
+	@Column(name = "terminee")
+	private boolean terminee;
 	@ManyToOne
 	@JoinColumn(name = "membre_id")
 	private Membre membre;
@@ -45,12 +47,14 @@ public abstract class Enchere {
 	public Enchere(LocalDateTime dateTime, int valeur) {
 		this.dateTime = dateTime;
 		this.valeur = valeur;
+		this.terminee = false;
 	}
 
 	public Enchere(Long id, LocalDateTime dateTime, int valeur) {
 		this.id = id;
 		this.dateTime = dateTime;
 		this.valeur = valeur;
+		this.terminee = false;
 	}
 
 	public Long getId() {

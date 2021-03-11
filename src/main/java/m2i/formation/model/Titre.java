@@ -1,6 +1,5 @@
 package m2i.formation.model;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import javax.persistence.Column;
@@ -28,7 +27,7 @@ public class Titre {
 
 	@ManyToMany(fetch = FetchType.LAZY)
 	@JoinTable(name = "PLAYLIST_TITRE", joinColumns = @JoinColumn(name = "titre_id"), inverseJoinColumns = @JoinColumn(name = "playlist_id"))
-	private List<Playlist> playlists = new ArrayList<>();
+	private List<Playlist> playlists;
 
 	public Titre() {
 	}
