@@ -19,16 +19,16 @@ public class TestJukebox {
 		Jukebox jukeboxDisco = new Jukebox("Le jukebox disco", "54198498", TypeEnchere.GRATUITE);
 		Jukebox jukeboxRock = new Jukebox("Le jukebox rock", "54198498", TypeEnchere.MIXTE);
 
-		jukeboxDao.create(jukeboxDisco);
-		jukeboxDao.create(jukeboxRock);
+		jukeboxDao.save(jukeboxDisco);
+		jukeboxDao.save(jukeboxRock);
 
 		Administrateur admin = new Administrateur("Admin", 0, "***");
 
-		utilisateurDao.create(admin);
+		utilisateurDao.save(admin);
 
 		jukeboxDisco.setAdministrateur(admin);
 
-		jukeboxDao.update(jukeboxDisco);
+		jukeboxDao.save(jukeboxDisco);
 
 		context.close();
 	}

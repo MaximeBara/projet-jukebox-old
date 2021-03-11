@@ -19,8 +19,11 @@
 	<context:annotation-config />
 
 	<!-- Indiquer dans quel paquetage scanner pour trouver des annotations -->
-	<context:component-scan
-		base-package="m2i.formation.dao.jpa" />
+<!-- 	<context:component-scan -->
+<!-- 		base-package="m2i.formation.dao.jpa" /> -->
+
+	<!-- Scan des JpaRepositories -->
+	<jpa:repositories base-package="m2i.formation.dao" />
 
 	<!-- On crée le DataSource -->
 	<bean id="dataSource"
@@ -47,7 +50,7 @@
 		<!-- On précise les propriétés ... -->
 		<property name="jpaProperties">
 			<props>
-				<prop key="hibernate.hbm2ddl.auto">create</prop>
+				<prop key="hibernate.hbm2ddl.auto">update</prop>
 				<prop key="hibernate.dialect">${db.dialect}</prop>
 				<prop key="hibernate.show_sql">true</prop>
 			</props>
