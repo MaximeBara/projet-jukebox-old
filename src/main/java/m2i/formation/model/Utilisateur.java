@@ -35,6 +35,14 @@ public abstract class Utilisateur {
 		this.pseudo = pseudo;
 	}
 	
+	public Jukebox getJukebox() {
+		return jukebox;
+	}
+
+	public void setJukebox(Jukebox jukebox) {
+		this.jukebox = jukebox;
+	}
+
 	public Long getId() {
 		return id;
 	}

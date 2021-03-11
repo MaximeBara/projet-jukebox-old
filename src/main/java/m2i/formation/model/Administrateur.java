@@ -33,6 +33,14 @@ public class Administrateur extends Membre {
 				+ super.toString() + ", getId()=" + getId() + ", getPseudo()=" + getPseudo() + ", getClass()="
 				+ getClass() + "]";
 	}
+
+	public List<Jukebox> getJukeboxes() {
+		return jukeboxes;
+	}
+
+	public void setJukeboxes(List<Jukebox> jukeboxes) {
+		this.jukeboxes = jukeboxes;
+	}
 	
 	
 }
