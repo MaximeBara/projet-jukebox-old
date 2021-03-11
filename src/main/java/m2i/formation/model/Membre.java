@@ -71,4 +71,28 @@ public class Membre extends Utilisateur {
 				+ getPseudo() + ", toString()=" + super.toString() + ", getClass()=" + getClass() + "]";
 	}
 
+	public List<Enchere> getEncheres() {
+		return encheres;
+	}
+
+	public void setEncheres(List<Enchere> encheres) {
+		this.encheres = encheres;
+	}
+
+	public List<Playlist> getPlaylists() {
+		return playlists;
+	}
+
+	public void setPlaylists(List<Playlist> playlists) {
+		this.playlists = playlists;
+	}
+
+	public List<Jukebox> getJukeboxes() {
+		return jukeboxes;
+	}
+
+	public void setJukeboxes(List<Jukebox> jukeboxes) {
+		this.jukeboxes = jukeboxes;
+	}
+
 }

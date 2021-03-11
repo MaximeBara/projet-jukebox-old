@@ -1,21 +1,65 @@
 package m2i.formation.test;
 
-import java.text.ParseException;
+import java.util.Optional;
 
+import org.junit.Assert;
+import org.junit.Before;
+import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.test.context.ContextConfiguration;
+import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
+
+import m2i.formation.dao.IUtilisateurDao;
 import m2i.formation.model.Administrateur;
 import m2i.formation.model.Invite;
 import m2i.formation.model.Membre;
+import m2i.formation.model.Utilisateur;
 
+@RunWith(SpringJUnit4ClassRunner.class)
+@ContextConfiguration("/application-context.xml")
 public class TestUtilisateur {
 
-	
-	public static void main(String[] args) throws ParseException {
-		
-		Invite invite = new Invite(1l,"toto");
-		Administrateur admin = new Administrateur (1l,"toto",1,"motdepasse");
-		Membre membre = new Membre (1l,"toto",1,"motdepasse");
-		System.out.println("Invite: "+invite);
-		System.out.println("admin: "+admin);
-		System.out.println("membre: "+membre);
+	@Autowired
+	private IUtilisateurDao utilisateurDao;
+
+	@Before
+	public void utilisateurDaoCreate() {
+		Utilisateur utilisateur = new Invite("josse");
+		utilisateurDao.save(utilisateur);
+		Utilisateur utilisateur2 = new Membre("lilo", 8, "member");
+		utilisateurDao.save(utilisateur2);
+		Utilisateur utilisateur3 = new Administrateur("superlilo", 2, "root");
+		utilisateurDao.save(utilisateur3);
+
+	}
+
+	@Test
+	public void testFindAll() {
+		Assert.assertEquals(3, utilisateurDao.findAll().size());
+	}
+
+	@Test
+	public void membreUpdatePoint() {
+		// A - Arrange
+		Membre utilisateur = new Membre("superlilo", 2, "root");
+		utilisateurDao.save(utilisateur);
+		// -----------
+
+		// A - Act
+		Membre membreFind = (Membre) utilisateurDao.findByID(utilisateur.getId());
+
+		membreFind.setPoint(3);
+
+		membreFind = utilisateurDao.save(membreFind);
+		// -----------
+
+		// A - Assert
+		membreFind = (Membre) utilisateurDao.findByID(membreFind.getId());
+
+		Assert.assertEquals("superlilo", membreFind.getPseudo());
+		Assert.assertEquals(3, membreFind.getPoint());
+		Assert.assertEquals("root", membreFind.getMotDePasse());
+		// -----------
 	}
 }
