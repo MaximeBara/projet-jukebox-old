@@ -10,7 +10,7 @@
 		http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop.xsd
 		http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx.xsd
 		http://www.springframework.org/schema/data/jpa http://www.springframework.org/schema/data/jpa/spring-jpa.xsd">
-
+		
 	<context:property-placeholder
 		location="classpath:db.properties" />
 
@@ -19,8 +19,8 @@
 	<context:annotation-config />
 
 	<!-- Indiquer dans quel paquetage scanner pour trouver des annotations -->
-<!-- 	<context:component-scan -->
-<!-- 		base-package="m2i.formation.dao.jpa" /> -->
+	<!-- <context:component-scan -->
+	<!-- base-package="m2i.formation.dao.jpa" /> -->
 
 	<!-- Scan des JpaRepositories -->
 	<jpa:repositories base-package="m2i.formation.dao" />

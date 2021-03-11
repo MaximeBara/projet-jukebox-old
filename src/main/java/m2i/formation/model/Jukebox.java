@@ -1,6 +1,5 @@
 package m2i.formation.model;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import javax.persistence.Column;
@@ -29,11 +28,11 @@ public class Jukebox {
 	private TypeEnchere typeEnchere;
 
 	@OneToMany(mappedBy = "jukebox", fetch = FetchType.LAZY)
-	private List<Utilisateur> connectes = new ArrayList<>();
+	private List<Utilisateur> connectes;
 
 	@ManyToMany(fetch = FetchType.LAZY)
 	@JoinTable(name = "FAVORIS", joinColumns = @JoinColumn(name = "jukebox_id"), inverseJoinColumns = @JoinColumn(name = "membre_id"))
-	private List<Membre> fans = new ArrayList<>();
+	private List<Membre> fans;
 
 	@ManyToOne()
 	@JoinColumn(name = "administrateur_id")
@@ -44,7 +43,7 @@ public class Jukebox {
 	private Playlist playlist;
 
 	@OneToMany(mappedBy = "jukebox", fetch = FetchType.LAZY)
-	private List<Enchere> encheres = new ArrayList<>();
+	private List<Enchere> encheres;
 
 	public Jukebox() {
 	}

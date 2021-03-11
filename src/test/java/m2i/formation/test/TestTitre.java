@@ -17,7 +17,6 @@ public class TestTitre {
 	@Autowired
 	ITitreDao titreDao;
 
-
 	@Before
 	public void load() {
 		Titre playlist1 = new Titre("La titre Rock", "RockMan", "youtube.fr/rock");
@@ -26,9 +25,8 @@ public class TestTitre {
 		titreDao.save(playlist2);
 		Titre playlist3 = new Titre("La titre Jazz", "JazzMan", "youtube.fr/jazz");
 		titreDao.save(playlist3);
-
 	}
-	
+
 	@Test
 	public void testFindAll() {
 		Assert.assertEquals(3, titreDao.findAll().size());
