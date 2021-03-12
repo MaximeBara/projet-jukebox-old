@@ -4,6 +4,7 @@ import java.util.List;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.repository.query.Param;
 
 import m2i.formation.model.Invite;
 import m2i.formation.model.Membre;
@@ -15,7 +16,7 @@ public interface IUtilisateurDao extends JpaRepository<Utilisateur, Long> {
 	List<Utilisateur> findAllUtilisateur();
 
 	@Query("select user from Utilisateur user where user.id = :id")
-	List<Utilisateur> findByID(long id);
+	Membre findByID(@Param("id") long id);
 	
 	@Query("select m from Membre m")
 	List<Membre> findMembre();

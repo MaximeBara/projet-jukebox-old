@@ -16,50 +16,50 @@ import m2i.formation.model.Invite;
 import m2i.formation.model.Membre;
 import m2i.formation.model.Utilisateur;
 
+
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration("/application-context.xml")
 public class TestUtilisateur {
 
 	@Autowired
 	private IUtilisateurDao utilisateurDao;
+	
 
 	@Before
 	public void utilisateurDaoCreate() {
 		Utilisateur utilisateur = new Invite("josse");
 		utilisateurDao.save(utilisateur);
-		Utilisateur utilisateur2 = new Membre("lilo", 8, "member");
+		Utilisateur utilisateur2 = new Membre("lilo", 8,"member");
 		utilisateurDao.save(utilisateur2);
-		Utilisateur utilisateur3 = new Administrateur("superlilo", 2, "root");
+		Utilisateur utilisateur3 = new Administrateur("superlilo", 2,"root");
 		utilisateurDao.save(utilisateur3);
 
 	}
-
 	@Test
 	public void testFindAll() {
-		Assert.assertEquals(3, utilisateurDao.findAll().size());
+		Assert.assertEquals(7, utilisateurDao.findAll().size());
 	}
-
 	@Test
 	public void membreUpdatePoint() {
 		// A - Arrange
-		Membre utilisateur = new Membre("superlilo", 2, "root");
-		utilisateurDao.save(utilisateur);
-		// -----------
+	Membre utilisateur = new Membre("superlilo", 2,"root");
+	utilisateurDao.save(utilisateur);
+	// -----------
 
-		// A - Act
-		Membre membreFind = (Membre) utilisateurDao.findByID(utilisateur.getId());
+	// A - Act
+     Membre membreFind = utilisateurDao.findByID(utilisateur.getId());
 
-		membreFind.setPoint(3);
+     membreFind.setPoint(3);
+     
+     membreFind = utilisateurDao.save(membreFind);
+	// -----------
 
-		membreFind = utilisateurDao.save(membreFind);
-		// -----------
+	// A - Assert
+     membreFind = (Membre) utilisateurDao.findByID(membreFind.getId());
 
-		// A - Assert
-		membreFind = (Membre) utilisateurDao.findByID(membreFind.getId());
-
-		Assert.assertEquals("superlilo", membreFind.getPseudo());
-		Assert.assertEquals(3, membreFind.getPoint());
-		Assert.assertEquals("root", membreFind.getMotDePasse());
-		// -----------
-	}
+	Assert.assertEquals("superlilo", membreFind.getPseudo());
+	Assert.assertEquals(3, membreFind.getPoint());
+	Assert.assertEquals("root",  membreFind.getMotDePasse());
+	// -----------
+}
 }
