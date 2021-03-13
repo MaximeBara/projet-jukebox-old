@@ -104,6 +104,14 @@ public abstract class Enchere {
 	public void setTitre(Titre titre) {
 		this.titre = titre;
 	}
+	
+	public boolean isTerminee() {
+		return terminee;
+	}
+
+	public void setTerminee(boolean terminee) {
+		this.terminee = terminee;
+	}
 
 	@Override
 	public String toString() {

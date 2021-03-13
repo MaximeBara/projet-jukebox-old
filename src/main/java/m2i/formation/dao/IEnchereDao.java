@@ -20,15 +20,15 @@ public interface IEnchereDao extends JpaRepository<Enchere, Long> {
 	List<Enchere> findAllEnchereTermineeByJukebox(@Param("leJukebox") Jukebox jukebox);
 
 	@Query("SELECT e from Enchere e JOIN e.membre m WHERE m = :leMembre")
-	List<Enchere> findByMembre(@Param("leMembre") Membre membre);
+	List<Enchere> findAllEnchereByMembre(@Param("leMembre") Membre membre);
 
 	@Query("SELECT e from Enchere e JOIN e.membre m WHERE m = :leMembre AND e.terminee = true")
-	List<Enchere> findByMembreAndTerminee(Membre membre);
+	List<Enchere> findAllEnchereTermineeByMembre(@Param("leMembre") Membre membre);
 
 	@Query("SELECT e from Enchere e JOIN e.membre m WHERE m = :leMembre AND e.terminee = false")
-	List<Enchere> findByMembreAndNotTerminee(Membre membre);
+	List<Enchere> findAllEnchereNotTermineeByMembre(@Param("leMembre") Membre membre);
 
-	@Query("SELECT e from Enchere e JOIN e.titre t JOIN e.jukebox j WHERE t = :leTitre AND j = :leJukebox")
-	List<Enchere> findByTitreAndJukebox(@Param("leTitre") Titre titre, @Param("leJukebox") Jukebox jukebox);
+	@Query("SELECT e from Enchere e JOIN e.titre t JOIN e.jukebox j WHERE t = :leTitre AND j = :leJukebox AND e.terminee = false")
+	List<Enchere> findAllEnchereNotTermineeByTitreAndJukebox(@Param("leTitre") Titre titre, @Param("leJukebox") Jukebox jukebox);
 
 }
