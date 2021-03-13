@@ -87,12 +87,12 @@ public class Membre extends Utilisateur {
 		this.playlists = playlists;
 	}
 
-	public List<Jukebox> getJukeboxes() {
+	public List<Jukebox> getJukeboxFavoris() {
 		return jukeboxFavoris;
 	}
 
-	public void setJukeboxFavoris(List<Jukebox> jukeboxFavoris) {
-		this.jukeboxFavoris = jukeboxFavoris;
+	public void setJukeboxFavoris(Jukebox jukeboxFavoris) {
+		this.jukeboxFavoris.add(jukeboxFavoris);
 	}
 
 }

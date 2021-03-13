@@ -1,5 +1,7 @@
 package m2i.formation.test;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Optional;
 
 import org.junit.Assert;
@@ -10,10 +12,13 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
+import m2i.formation.dao.IJukeboxDao;
 import m2i.formation.dao.IUtilisateurDao;
 import m2i.formation.model.Administrateur;
 import m2i.formation.model.Invite;
+import m2i.formation.model.Jukebox;
 import m2i.formation.model.Membre;
+import m2i.formation.model.TypeEnchere;
 import m2i.formation.model.Utilisateur;
 
 
@@ -23,6 +28,9 @@ public class TestUtilisateur {
 
 	@Autowired
 	private IUtilisateurDao utilisateurDao;
+	
+	@Autowired
+	private IJukeboxDao jukeboxDao;
 	
 
 	@Before
@@ -43,7 +51,12 @@ public class TestUtilisateur {
 	public void membreUpdatePoint() {
 		// A - Arrange
 	Membre utilisateur = new Membre("superlilo", 2,"root");
+	Jukebox jukeboxDisco1 = new Jukebox(1L, "Le jukebox disco", "54198498", TypeEnchere.GRATUITE);
+	
+	//utilisateur.setJukeboxFavoris(jukeboxDisco1);
+	
 	utilisateurDao.save(utilisateur);
+	//jukeboxDao.save(jukeboxDisco1);
 	// -----------
 
 	// A - Act
@@ -56,7 +69,7 @@ public class TestUtilisateur {
 
 	// A - Assert
      membreFind = (Membre) utilisateurDao.findByID(membreFind.getId());
-
+  
 	Assert.assertEquals("superlilo", membreFind.getPseudo());
 	Assert.assertEquals(3, membreFind.getPoint());
 	Assert.assertEquals("root",  membreFind.getMotDePasse());

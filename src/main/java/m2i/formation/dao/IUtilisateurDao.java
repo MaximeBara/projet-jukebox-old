@@ -18,6 +18,9 @@ public interface IUtilisateurDao extends JpaRepository<Utilisateur, Long> {
 	@Query("select user from Utilisateur user where user.id = :id")
 	Membre findByID(@Param("id") long id);
 	
+	/*@Query("select jukeboxfav from Membre jukeboxfav left join jukeboxfav.Favoris s where jukeboxfav.id = :id")
+	Membre findByFavoris(@Param("id") long id);*/
+	
 	@Query("select m from Membre m")
 	List<Membre> findMembre();
 
