@@ -29,7 +29,7 @@ public class Membre extends Utilisateur {
 	
 	@ManyToMany(fetch = FetchType.LAZY)
 	@JoinTable(name = "FAVORIS", joinColumns = @JoinColumn(name = "membre_id"), inverseJoinColumns = @JoinColumn(name = "jukebox_id"))
-	private List<Jukebox> jukeboxes = new ArrayList<Jukebox>();
+	private List<Jukebox> jukeboxFavoris = new ArrayList<Jukebox>();
 
 
 	public Membre() {
@@ -88,11 +88,11 @@ public class Membre extends Utilisateur {
 	}
 
 	public List<Jukebox> getJukeboxes() {
-		return jukeboxes;
+		return jukeboxFavoris;
 	}
 
-	public void setJukeboxes(List<Jukebox> jukeboxes) {
-		this.jukeboxes = jukeboxes;
+	public void setJukeboxFavoris(List<Jukebox> jukeboxFavoris) {
+		this.jukeboxFavoris = jukeboxFavoris;
 	}
 
 }
