@@ -17,7 +17,7 @@ public interface IJukeboxDao extends JpaRepository<Jukebox, Long> {
 	@Query("select u from Utilisateur u where u.jukebox.id = :id")
 	public List<Utilisateur> findAllConnectesById(@Param("id") Long id);
 
-	@Query("select m from Membre m left join m.jukeboxes j where j.id = :id")
+	@Query("select m from Membre m left join m.jukeboxFavoris j where j.id = :id")
 	public List<Membre> findAllFansById(@Param("id") Long id);
 	
 	@Query("select j.administrateur from Jukebox j where j.id = :id")
@@ -39,7 +39,7 @@ public interface IJukeboxDao extends JpaRepository<Jukebox, Long> {
 	 * @param membre
 	 * @return Une liste de jukebox
 	 */
-	@Query("select j from Membre m left join m.jukeboxes j where m = :membre")
+	@Query("select j from Membre m left join m.jukeboxFavoris j where m = :membre")
 	public List<Jukebox> findAllByMembre(@Param("membre") Membre membre);
 	
 }
