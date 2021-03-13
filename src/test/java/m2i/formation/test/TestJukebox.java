@@ -23,13 +23,13 @@ public class TestJukebox {
 	IJukeboxDao jukeboxDao;
 	@Autowired
 	IUtilisateurDao utilisateurDao;
-	
+
 	static boolean flag = true;
 
 	@Before
 	public void load() {
-		
-		if(flag) {
+
+		if (flag) {
 			Jukebox jukeboxDisco = new Jukebox(1L, "Le jukebox disco", "54198498", TypeEnchere.GRATUITE);
 			Jukebox jukeboxRock = new Jukebox(2L, "Le jukebox rock", "54198498", TypeEnchere.MIXTE);
 
@@ -57,11 +57,9 @@ public class TestJukebox {
 			utilisateurDao.save(membre1);
 
 			jukeboxDao.save(jukeboxDisco);
-			
-			
+
 			flag = false;
 		}
-		
 
 	}
 
@@ -75,4 +73,54 @@ public class TestJukebox {
 		Assert.assertEquals(1, jukeboxDao.findAllFansById(2L).size());
 	}
 
+	@Test
+	public void testFindAdministrateurById() {
+		Administrateur admin = new Administrateur("AdminTest", 0, "******");
+		utilisateurDao.save(admin);
+
+		Jukebox jukebox = new Jukebox("AdminTest", "19448", TypeEnchere.MIXTE);
+		jukebox.setAdministrateur(admin);
+		jukeboxDao.save(jukebox);
+
+		Administrateur newAdmin = jukeboxDao.findAdministrateurById(jukebox.getId());
+		Assert.assertEquals(admin.getPseudo(), newAdmin.getPseudo());
+		Assert.assertEquals(admin.getMotDePasse(), newAdmin.getMotDePasse());
+		Assert.assertEquals(admin.getPoint(), newAdmin.getPoint());
+		jukeboxDao.delete(jukebox);
+		utilisateurDao.delete(admin);
+	}
+
+	@Test
+	public void testfindPlaylistById() {
+		// TODO
+	}
+
+	@Test
+	public void testfindByUtilisateur() {
+		// TODO
+	}
+
+	@Test
+	public void testfindAllByMembre() {
+
+		Jukebox jukeboxDisco = new Jukebox("Le jukebox disco", "54198498", TypeEnchere.GRATUITE);
+		Jukebox jukeboxRock = new Jukebox("Le jukebox rock", "54198498", TypeEnchere.MIXTE);
+
+		jukeboxDao.save(jukeboxDisco);
+		jukeboxDao.save(jukeboxRock);
+
+		Membre membre = new Membre("membreTest", 0, "***");
+
+		membre.getJukeboxes().add(jukeboxDisco);
+		membre.getJukeboxes().add(jukeboxRock);
+
+		utilisateurDao.save(membre);
+
+		Assert.assertEquals(2, jukeboxDao.findAllByMembre(membre).size());
+		
+		utilisateurDao.delete(membre);
+		
+		jukeboxDao.delete(jukeboxDisco);
+		jukeboxDao.delete(jukeboxRock);
+	}
 }
