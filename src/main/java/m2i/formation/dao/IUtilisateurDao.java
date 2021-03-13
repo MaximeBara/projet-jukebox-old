@@ -15,7 +15,7 @@ public interface IUtilisateurDao extends JpaRepository<Utilisateur, Long> {
 	List<Utilisateur> findAllUtilisateur();
 
 	@Query("select user from Utilisateur user where user.id = :id")
-	List<Utilisateur> findByID(long id);
+	Utilisateur findByID(long id);
 	
 	@Query("select m from Membre m")
 	List<Membre> findMembre();

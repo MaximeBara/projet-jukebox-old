@@ -61,6 +61,7 @@ public class TestEnchere {
 		EnchereGratuite eg1 = new EnchereGratuite(LocalDateTime.now(), 1);
 		EnchereGratuite eg2 = new EnchereGratuite(LocalDateTime.now(), 2);
 		EnchereGratuite eg3 = new EnchereGratuite(LocalDateTime.now(), 3);
+		EnchereGratuite eg4 = new EnchereGratuite(LocalDateTime.now(), 4);
 		EncherePayante ep1 = new EncherePayante(LocalDateTime.now(), 1);
 		EncherePayante ep2 = new EncherePayante(LocalDateTime.now(), 2);
 		EncherePayante ep3 = new EncherePayante(LocalDateTime.now(), 3);
@@ -84,10 +85,15 @@ public class TestEnchere {
 		ep3.setJukebox(j3);
 		ep3.setMembre(m3);
 		ep3.setTitre(t2);
-
+		
+		eg4.setJukebox(j1);
+		eg4.setMembre(m2);
+		eg4.setTitre(t1);
+		
 		enchereDao.save(eg1);
 		enchereDao.save(eg2);
 		enchereDao.save(eg3);
+		enchereDao.save(eg4);
 		enchereDao.save(ep1);
 		enchereDao.save(ep2);
 		enchereDao.save(ep3);
@@ -95,15 +101,35 @@ public class TestEnchere {
 	}
 
 	@Test
-	public void testfindAllEnchereNotTermineeByJukebox() {
-		Assert.assertEquals(2, enchereDao.findAllEnchereNotTermineeByJukebox(jukeboxDao.findById(1L).orElse(null)).size());
+	public void testFindAllEnchereNotTermineeByJukebox() {
+		Assert.assertEquals(3, enchereDao.findAllEnchereNotTermineeByJukebox(jukeboxDao.findById(1L).orElse(null)).size());
 	}
 	
 	@Test
-	public void testfindAllEnchereTermineeByJukebox() {
+	public void testFindAllEnchereTermineeByJukebox() {
 		Assert.assertEquals(0, enchereDao.findAllEnchereTermineeByJukebox(jukeboxDao.findById(1L).orElse(null)).size());
 	}
 	
+	@Test
+	public void testFindByMembre() {
+		Assert.assertEquals(3, enchereDao.findByMembre((Membre) utilisateurDao.findById(7L).orElse(null)).size());
+		Assert.assertEquals(3, enchereDao.findByMembre((Membre) utilisateurDao.findById(8L).orElse(null)).size());
+		Assert.assertEquals(1, enchereDao.findByMembre((Membre) utilisateurDao.findById(9L).orElse(null)).size());
+	}
 	
+	@Test
+	public void testFindByTitreAndJukebox() {
+		Assert.assertEquals(2, enchereDao.findByTitreAndJukebox(titreDao.findById(4L).orElse(null), jukeboxDao.findById(1L).orElse(null)).size());
+	}
+	
+	@Test
+	public void testFindByMembreAndTerminee() {
+		// TODO
+	}
+	
+	@Test
+	public void testFindByMembreAndNotTerminee() {
+		// TODO
+	}
 
 }
