@@ -42,4 +42,7 @@ public interface IJukeboxDao extends JpaRepository<Jukebox, Long> {
 	@Query("select j from Membre m left join m.jukeboxFavoris j where m = :membre")
 	public List<Jukebox> findAllByMembre(@Param("membre") Membre membre);
 	
+	//TODO public Jukebox findByEnchere(@Param("membre") Membre membre);
+	//TODO public Jukebox findByAdministrateur(@Param("membre") Membre membre);
+	
 }
