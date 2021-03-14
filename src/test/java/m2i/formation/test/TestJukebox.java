@@ -2,6 +2,7 @@ package m2i.formation.test;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.time.LocalDateTime;
 
 import org.junit.Assert;
 import org.junit.Test;
@@ -10,10 +11,12 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
+import m2i.formation.dao.IEnchereDao;
 import m2i.formation.dao.IJukeboxDao;
 import m2i.formation.dao.IPlaylistDao;
 import m2i.formation.dao.IUtilisateurDao;
 import m2i.formation.model.Administrateur;
+import m2i.formation.model.EnchereGratuite;
 import m2i.formation.model.Invite;
 import m2i.formation.model.Jukebox;
 import m2i.formation.model.Membre;
@@ -29,6 +32,10 @@ public class TestJukebox {
 	IUtilisateurDao utilisateurDao;
 	@Autowired
 	IPlaylistDao playlistDao;
+	@Autowired
+	IEnchereDao enchereDao;
+
+	SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
 
 	@Test
 	public void testFindAllConnectes() {
@@ -68,24 +75,23 @@ public class TestJukebox {
 	}
 
 	@Test
-	public void testfindPlaylistById() throws ParseException {
-		SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
-		
+	public void testFindPlaylistById() throws ParseException {
+
 		Jukebox jukebox = new Jukebox("AdminTest", "19448", TypeEnchere.MIXTE);
 		Playlist playlist = new Playlist("La playlist", sdf.parse("01/03/2021"));
 		playlistDao.save(playlist);
 		jukebox.setPlaylist(playlist);
 		jukeboxDao.save(jukebox);
-		
+
 		Playlist newPlaylist = jukeboxDao.findPlaylistById(jukebox.getId());
-		
+
 		Assert.assertEquals(playlist.getId(), newPlaylist.getId());
 		Assert.assertEquals(playlist.getNom(), newPlaylist.getNom());
 		Assert.assertEquals(playlist.getDateCreation(), newPlaylist.getDateCreation());
 	}
 
 	@Test
-	public void testfindByUtilisateur() {
+	public void testFindByUtilisateur() {
 		Jukebox jukeboxDisco = new Jukebox("Le jukebox disco", "54198498", TypeEnchere.GRATUITE);
 
 		jukeboxDao.save(jukeboxDisco);
@@ -98,16 +104,15 @@ public class TestJukebox {
 
 		utilisateurDao.save(membre);
 		utilisateurDao.save(invite);
-		
+
 		Jukebox newJukeboxMembre = jukeboxDao.findByUtilisateur(membre);
 		Jukebox newJukeboxInvite = jukeboxDao.findByUtilisateur(invite);
-		
 
 		Assert.assertEquals(jukeboxDisco.getId(), newJukeboxMembre.getId());
 		Assert.assertEquals(jukeboxDisco.getNom(), newJukeboxMembre.getNom());
 		Assert.assertEquals(jukeboxDisco.getCode(), newJukeboxMembre.getCode());
 		Assert.assertEquals(jukeboxDisco.getTypeEnchere(), newJukeboxMembre.getTypeEnchere());
-		
+
 		Assert.assertEquals(jukeboxDisco.getId(), newJukeboxInvite.getId());
 		Assert.assertEquals(jukeboxDisco.getNom(), newJukeboxInvite.getNom());
 		Assert.assertEquals(jukeboxDisco.getCode(), newJukeboxInvite.getCode());
@@ -115,7 +120,7 @@ public class TestJukebox {
 	}
 
 	@Test
-	public void testfindAllByMembre() {
+	public void testFindAllByMembre() {
 		Jukebox jukeboxDisco = new Jukebox("Le jukebox disco", "54198498", TypeEnchere.GRATUITE);
 		Jukebox jukeboxRock = new Jukebox("Le jukebox rock", "54198498", TypeEnchere.MIXTE);
 
@@ -130,5 +135,38 @@ public class TestJukebox {
 		utilisateurDao.save(membre);
 
 		Assert.assertEquals(2, jukeboxDao.findAllByMembre(membre).size());
+	}
+
+	@Test
+	public void testFindByEnchere() {
+		Jukebox jukeboxDisco = new Jukebox("FindByEnchere", "54198498", TypeEnchere.GRATUITE);
+		jukeboxDao.save(jukeboxDisco);
+		EnchereGratuite enchere = new EnchereGratuite(LocalDateTime.now(), 100);
+		enchere.setJukebox(jukeboxDisco);
+		enchereDao.save(enchere);
+		Jukebox newJukebox = jukeboxDao.findByEnchere(enchere);
+
+		Assert.assertEquals(jukeboxDisco.getId(), newJukebox.getId());
+		Assert.assertEquals(jukeboxDisco.getNom(), newJukebox.getNom());
+		Assert.assertEquals(jukeboxDisco.getCode(), newJukebox.getCode());
+		Assert.assertEquals(jukeboxDisco.getTypeEnchere(), newJukebox.getTypeEnchere());
+	}
+
+	@Test
+	public void testFindByAdministrateur() {
+		Jukebox jukeboxDisco = new Jukebox("FindByEnchere", "54198498", TypeEnchere.GRATUITE);
+		jukeboxDao.save(jukeboxDisco);
+		Administrateur admin = new Administrateur("Admin", 0, "***");
+		jukeboxDisco.setAdministrateur(admin);
+		
+		utilisateurDao.save(admin);
+		jukeboxDao.save(jukeboxDisco);
+		
+		Jukebox newJukebox = jukeboxDao.findByAdministrateur(admin);
+
+		Assert.assertEquals(jukeboxDisco.getId(), newJukebox.getId());
+		Assert.assertEquals(jukeboxDisco.getNom(), newJukebox.getNom());
+		Assert.assertEquals(jukeboxDisco.getCode(), newJukebox.getCode());
+		Assert.assertEquals(jukeboxDisco.getTypeEnchere(), newJukebox.getTypeEnchere());
 	}
 }

@@ -7,6 +7,7 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 
 import m2i.formation.model.Administrateur;
+import m2i.formation.model.Enchere;
 import m2i.formation.model.Jukebox;
 import m2i.formation.model.Membre;
 import m2i.formation.model.Playlist;
@@ -42,7 +43,10 @@ public interface IJukeboxDao extends JpaRepository<Jukebox, Long> {
 	@Query("select j from Membre m left join m.jukeboxFavoris j where m = :membre")
 	public List<Jukebox> findAllByMembre(@Param("membre") Membre membre);
 	
-	//TODO public Jukebox findByEnchere(@Param("membre") Membre membre);
-	//TODO public Jukebox findByAdministrateur(@Param("membre") Membre membre);
+	@Query("select j from Enchere e left join e.jukebox j where e = :enchere")
+	public Jukebox findByEnchere(@Param("enchere") Enchere enchere);
+	
+	@Query("select j from Jukebox j where j.administrateur = :administrateur")
+	public Jukebox findByAdministrateur(@Param("administrateur") Administrateur administrateur);
 	
 }
