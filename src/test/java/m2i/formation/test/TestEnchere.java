@@ -3,7 +3,6 @@ package m2i.formation.test;
 import java.time.LocalDateTime;
 
 import org.junit.Assert;
-import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -26,130 +25,374 @@ import m2i.formation.model.TypeEnchere;
 public class TestEnchere {
 
 	@Autowired
-	IEnchereDao enchereDao;
+	private IEnchereDao enchereDao;
 	@Autowired
-	IJukeboxDao jukeboxDao;
+	private IJukeboxDao jukeboxDao;
 	@Autowired
-	IUtilisateurDao utilisateurDao;
+	private IUtilisateurDao utilisateurDao;
 	@Autowired
-	ITitreDao titreDao;
-
-	static boolean flag = true;
-
-	@Before
-	public void load() {
-
-		if (flag) {
-
-			Jukebox j1 = new Jukebox("Bass music Jukebox", "123456789", TypeEnchere.GRATUITE);
-			Jukebox j2 = new Jukebox("Rock music Jukebox", "987654321", TypeEnchere.PAYANTE);
-			Jukebox j3 = new Jukebox("Metal music Jukebox", "123412341", TypeEnchere.MIXTE);
-			jukeboxDao.save(j1);
-			jukeboxDao.save(j2);
-			jukeboxDao.save(j3);
-
-			Titre t1 = new Titre("Offender", "Dimension", "https://www.youtube.com/watch?v=d2u3BRGd2rs");
-			Titre t2 = new Titre("Saviour", "Dimension", "https://www.youtube.com/watch?v=R0ppOs2o-cw");
-			Titre t3 = new Titre("Organ", "Dimension", "https://www.youtube.com/watch?v=GJQZrANyNJY");
-			titreDao.save(t1);
-			titreDao.save(t2);
-			titreDao.save(t3);
-
-			Membre m1 = new Membre("Maxime", 10, "test");
-			Membre m2 = new Membre("Josse", 15, "test");
-			Membre m3 = new Membre("Guillaume", 20, "test");
-			utilisateurDao.save(m1);
-			utilisateurDao.save(m2);
-			utilisateurDao.save(m3);
-
-			EnchereGratuite eg1 = new EnchereGratuite(LocalDateTime.now(), 1);
-			EnchereGratuite eg2 = new EnchereGratuite(LocalDateTime.now(), 2);
-			EnchereGratuite eg3 = new EnchereGratuite(LocalDateTime.now(), 3);
-			EnchereGratuite eg4 = new EnchereGratuite(LocalDateTime.now(), 4);
-			EncherePayante ep1 = new EncherePayante(LocalDateTime.now(), 1);
-			EncherePayante ep2 = new EncherePayante(LocalDateTime.now(), 2);
-			EncherePayante ep3 = new EncherePayante(LocalDateTime.now(), 3);
-			EncherePayante ep4 = new EncherePayante(LocalDateTime.now(), 4);
-			
-			eg1.setJukebox(j1);
-			eg1.setMembre(m1);
-			eg1.setTitre(t1);
-			eg2.setJukebox(j1);
-			eg2.setMembre(m2);
-			eg2.setTitre(t2);
-
-			ep1.setJukebox(j2);
-			ep1.setMembre(m1);
-			ep1.setTitre(t1);
-			ep2.setJukebox(j2);
-			ep2.setMembre(m2);
-			ep2.setTitre(t2);
-
-			eg3.setJukebox(j3);
-			eg3.setMembre(m1);
-			eg3.setTitre(t1);
-			ep3.setJukebox(j3);
-			ep3.setMembre(m3);
-			ep3.setTitre(t2);
-
-			eg4.setJukebox(j1);
-			eg4.setMembre(m1);
-			eg4.setTitre(t1);
-			eg4.setTerminee(true);
-			ep4.setJukebox(j2);
-			ep4.setMembre(m1);
-			ep4.setTitre(t2);
-			ep4.setTerminee(true);
-
-			enchereDao.save(eg1);
-			enchereDao.save(eg2);
-			enchereDao.save(eg3);
-			enchereDao.save(eg4);
-			enchereDao.save(ep1);
-			enchereDao.save(ep2);
-			enchereDao.save(ep3);
-			enchereDao.save(ep4);
-			
-			flag = false;
-
-		}
-
-	}
+	private ITitreDao titreDao;
 
 	@Test
 	public void testFindAllEnchereNotTermineeByJukebox() {
-		Assert.assertEquals(2,
-				enchereDao.findAllEnchereNotTermineeByJukebox(jukeboxDao.findById(1L).orElse(null)).size());
+		EnchereGratuite eg1 = new EnchereGratuite(LocalDateTime.now(), 1);
+		EnchereGratuite eg2 = new EnchereGratuite(LocalDateTime.now(), 2);
+		EncherePayante ep1 = new EncherePayante(LocalDateTime.now(), 1);
+		EncherePayante ep2 = new EncherePayante(LocalDateTime.now(), 2);
+		EncherePayante ep3 = new EncherePayante(LocalDateTime.now(), 3);
+
+		Membre m1 = new Membre("Maxime", 10, "test");
+		utilisateurDao.save(m1);
+
+		Titre t1 = new Titre("Offender", "Dimension", "https://www.youtube.com/watch?v=d2u3BRGd2rs");
+		titreDao.save(t1);
+
+		Jukebox j1 = new Jukebox("Bass music Jukebox", "123456789", TypeEnchere.GRATUITE);
+		jukeboxDao.save(j1);
+
+		Jukebox j2 = new Jukebox("Rock music Jukebox", "987654321", TypeEnchere.PAYANTE);
+		jukeboxDao.save(j2);
+
+		eg1.setTerminee(true);
+		ep1.setTerminee(true);
+
+		eg1.setJukebox(j1);
+		eg1.setMembre(m1);
+		eg1.setTitre(t1);
+
+		eg2.setJukebox(j1);
+		eg2.setMembre(m1);
+		eg2.setTitre(t1);
+
+		ep1.setJukebox(j1);
+		ep1.setMembre(m1);
+		ep1.setTitre(t1);
+
+		ep2.setJukebox(j1);
+		ep2.setMembre(m1);
+		ep2.setTitre(t1);
+
+		ep3.setJukebox(j2);
+		ep3.setMembre(m1);
+		ep3.setTitre(t1);
+
+		enchereDao.save(eg1);
+		enchereDao.save(eg2);
+		enchereDao.save(ep1);
+		enchereDao.save(ep2);
+		enchereDao.save(ep3);
+
+		Assert.assertEquals(2, enchereDao.findAllEnchereNotTermineeByJukebox(j1).size());
+
+		Assert.assertEquals(1, enchereDao.findAllEnchereNotTermineeByJukebox(j2).size());
+
 	}
 
 	@Test
 	public void testFindAllEnchereTermineeByJukebox() {
-		Assert.assertEquals(1, enchereDao.findAllEnchereTermineeByJukebox(jukeboxDao.findById(1L).orElse(null)).size());
+
+		EnchereGratuite eg1 = new EnchereGratuite(LocalDateTime.now(), 1);
+		EnchereGratuite eg2 = new EnchereGratuite(LocalDateTime.now(), 2);
+		EncherePayante ep1 = new EncherePayante(LocalDateTime.now(), 1);
+		EncherePayante ep2 = new EncherePayante(LocalDateTime.now(), 2);
+		EncherePayante ep3 = new EncherePayante(LocalDateTime.now(), 3);
+
+		Membre m1 = new Membre("Maxime", 10, "test");
+		utilisateurDao.save(m1);
+
+		Titre t1 = new Titre("Offender", "Dimension", "https://www.youtube.com/watch?v=d2u3BRGd2rs");
+		titreDao.save(t1);
+
+		Jukebox j1 = new Jukebox("Bass music Jukebox", "123456789", TypeEnchere.GRATUITE);
+		jukeboxDao.save(j1);
+
+		Jukebox j2 = new Jukebox("Rock music Jukebox", "987654321", TypeEnchere.PAYANTE);
+		jukeboxDao.save(j2);
+
+		eg1.setTerminee(true);
+		ep1.setTerminee(true);
+
+		eg1.setJukebox(j1);
+		eg1.setMembre(m1);
+		eg1.setTitre(t1);
+
+		eg2.setJukebox(j1);
+		eg2.setMembre(m1);
+		eg2.setTitre(t1);
+
+		ep1.setJukebox(j1);
+		ep1.setMembre(m1);
+		ep1.setTitre(t1);
+
+		ep2.setJukebox(j1);
+		ep2.setMembre(m1);
+		ep2.setTitre(t1);
+
+		ep3.setJukebox(j2);
+		ep3.setMembre(m1);
+		ep3.setTitre(t1);
+
+		enchereDao.save(eg1);
+		enchereDao.save(eg2);
+		enchereDao.save(ep1);
+		enchereDao.save(ep2);
+		enchereDao.save(ep3);
+
+		Assert.assertEquals(2, enchereDao.findAllEnchereTermineeByJukebox(j1).size());
+
+		Assert.assertEquals(0, enchereDao.findAllEnchereTermineeByJukebox(j2).size());
 	}
 
 	@Test
 	public void testFindAllEnchereByMembre() {
-		Assert.assertEquals(5, enchereDao.findAllEnchereByMembre((Membre) utilisateurDao.findById(7L).orElse(null)).size());
-		Assert.assertEquals(2, enchereDao.findAllEnchereByMembre((Membre) utilisateurDao.findById(8L).orElse(null)).size());
-		Assert.assertEquals(1, enchereDao.findAllEnchereByMembre((Membre) utilisateurDao.findById(9L).orElse(null)).size());
+
+		EnchereGratuite eg1 = new EnchereGratuite(LocalDateTime.now(), 1);
+		EnchereGratuite eg2 = new EnchereGratuite(LocalDateTime.now(), 2);
+		EncherePayante ep1 = new EncherePayante(LocalDateTime.now(), 1);
+		EncherePayante ep2 = new EncherePayante(LocalDateTime.now(), 2);
+		EncherePayante ep3 = new EncherePayante(LocalDateTime.now(), 3);
+
+		Membre m1 = new Membre("Maxime", 10, "test");
+		Membre m2 = new Membre("Josse", 15, "test");
+		Membre m3 = new Membre("Guillaume", 20, "test");
+		utilisateurDao.save(m1);
+		utilisateurDao.save(m2);
+		utilisateurDao.save(m3);
+
+		Titre t1 = new Titre("Offender", "Dimension", "https://www.youtube.com/watch?v=d2u3BRGd2rs");
+		titreDao.save(t1);
+
+		Jukebox j1 = new Jukebox("Bass music Jukebox", "123456789", TypeEnchere.GRATUITE);
+		Jukebox j2 = new Jukebox("Rock music Jukebox", "987654321", TypeEnchere.PAYANTE);
+		jukeboxDao.save(j1);
+		jukeboxDao.save(j2);
+
+		eg1.setTerminee(true);
+		ep1.setTerminee(true);
+
+		eg1.setJukebox(j1);
+		eg1.setMembre(m1);
+		eg1.setTitre(t1);
+
+		eg2.setJukebox(j1);
+		eg2.setMembre(m1);
+		eg2.setTitre(t1);
+
+		ep1.setJukebox(j1);
+		ep1.setMembre(m1);
+		ep1.setTitre(t1);
+
+		ep2.setJukebox(j1);
+		ep2.setMembre(m2);
+		ep2.setTitre(t1);
+
+		ep3.setJukebox(j2);
+		ep3.setMembre(m2);
+		ep3.setTitre(t1);
+
+		enchereDao.save(eg1);
+		enchereDao.save(eg2);
+		enchereDao.save(ep1);
+		enchereDao.save(ep2);
+		enchereDao.save(ep3);
+
+		Assert.assertEquals(3, enchereDao.findAllEnchereByMembre(m1).size());
+		Assert.assertEquals(2, enchereDao.findAllEnchereByMembre(m2).size());
+		Assert.assertEquals(0, enchereDao.findAllEnchereByMembre(m3).size());
 	}
 
 	@Test
 	public void testFindAllEnchereNotTermineeByTitreAndJukebox() {
-		Assert.assertEquals(1,
-				enchereDao
-						.findAllEnchereNotTermineeByTitreAndJukebox(titreDao.findById(4L).orElse(null), jukeboxDao.findById(1L).orElse(null))
-						.size());
+
+		EnchereGratuite eg1 = new EnchereGratuite(LocalDateTime.now(), 1);
+		EnchereGratuite eg2 = new EnchereGratuite(LocalDateTime.now(), 2);
+		EncherePayante ep1 = new EncherePayante(LocalDateTime.now(), 1);
+		EncherePayante ep2 = new EncherePayante(LocalDateTime.now(), 2);
+		EncherePayante ep3 = new EncherePayante(LocalDateTime.now(), 3);
+
+		Membre m1 = new Membre("Maxime", 10, "test");
+		Membre m2 = new Membre("Josse", 15, "test");
+		Membre m3 = new Membre("Guillaume", 20, "test");
+		utilisateurDao.save(m1);
+		utilisateurDao.save(m2);
+		utilisateurDao.save(m3);
+
+		Titre t1 = new Titre("Offender", "Dimension", "https://www.youtube.com/watch?v=d2u3BRGd2rs");
+		Titre t2 = new Titre("Saviour", "Dimension", "https://www.youtube.com/watch?v=R0ppOs2o-cw");
+		Titre t3 = new Titre("Organ", "Dimension", "https://www.youtube.com/watch?v=GJQZrANyNJY");
+		titreDao.save(t1);
+		titreDao.save(t2);
+		titreDao.save(t3);
+
+		Jukebox j1 = new Jukebox("Bass music Jukebox", "123456789", TypeEnchere.GRATUITE);
+		Jukebox j2 = new Jukebox("Rock music Jukebox", "987654321", TypeEnchere.PAYANTE);
+		jukeboxDao.save(j1);
+		jukeboxDao.save(j2);
+
+		eg1.setTerminee(true);
+		ep1.setTerminee(true);
+
+		eg1.setJukebox(j1);
+		eg1.setMembre(m1);
+		eg1.setTitre(t1);
+
+		eg2.setJukebox(j1);
+		eg2.setMembre(m1);
+		eg2.setTitre(t1);
+
+		ep1.setJukebox(j1);
+		ep1.setMembre(m1);
+		ep1.setTitre(t2);
+
+		ep2.setJukebox(j2);
+		ep2.setMembre(m2);
+		ep2.setTitre(t2);
+
+		ep3.setJukebox(j2);
+		ep3.setMembre(m2);
+		ep3.setTitre(t2);
+
+		enchereDao.save(eg1);
+		enchereDao.save(eg2);
+		enchereDao.save(ep1);
+		enchereDao.save(ep2);
+		enchereDao.save(ep3);
+
+		Assert.assertEquals(1, enchereDao.findAllEnchereNotTermineeByTitreAndJukebox(t1, j1).size());
+
+		Assert.assertEquals(2, enchereDao.findAllEnchereNotTermineeByTitreAndJukebox(t2, j2).size());
+
+		Assert.assertEquals(0, enchereDao.findAllEnchereNotTermineeByTitreAndJukebox(t3, j1).size());
+
 	}
 
 	@Test
 	public void testFindAllEnchereTermineeByMembre() {
-		Assert.assertEquals(2, enchereDao.findAllEnchereTermineeByMembre((Membre) utilisateurDao.findById(7L).orElse(null)).size());
+
+		EnchereGratuite eg1 = new EnchereGratuite(LocalDateTime.now(), 1);
+		EnchereGratuite eg2 = new EnchereGratuite(LocalDateTime.now(), 2);
+		EncherePayante ep1 = new EncherePayante(LocalDateTime.now(), 1);
+		EncherePayante ep2 = new EncherePayante(LocalDateTime.now(), 2);
+		EncherePayante ep3 = new EncherePayante(LocalDateTime.now(), 3);
+
+		Membre m1 = new Membre("Maxime", 10, "test");
+		Membre m2 = new Membre("Josse", 15, "test");
+		Membre m3 = new Membre("Guillaume", 20, "test");
+		utilisateurDao.save(m1);
+		utilisateurDao.save(m2);
+		utilisateurDao.save(m3);
+
+		Titre t1 = new Titre("Offender", "Dimension", "https://www.youtube.com/watch?v=d2u3BRGd2rs");
+		Titre t2 = new Titre("Saviour", "Dimension", "https://www.youtube.com/watch?v=R0ppOs2o-cw");
+		Titre t3 = new Titre("Organ", "Dimension", "https://www.youtube.com/watch?v=GJQZrANyNJY");
+		titreDao.save(t1);
+		titreDao.save(t2);
+		titreDao.save(t3);
+
+		Jukebox j1 = new Jukebox("Bass music Jukebox", "123456789", TypeEnchere.GRATUITE);
+		Jukebox j2 = new Jukebox("Rock music Jukebox", "987654321", TypeEnchere.PAYANTE);
+		jukeboxDao.save(j1);
+		jukeboxDao.save(j2);
+
+		eg1.setTerminee(true);
+		ep1.setTerminee(true);
+		ep3.setTerminee(true);
+
+		eg1.setJukebox(j1);
+		eg1.setMembre(m1);
+		eg1.setTitre(t1);
+
+		eg2.setJukebox(j1);
+		eg2.setMembre(m1);
+		eg2.setTitre(t1);
+
+		ep1.setJukebox(j1);
+		ep1.setMembre(m1);
+		ep1.setTitre(t2);
+
+		ep2.setJukebox(j2);
+		ep2.setMembre(m2);
+		ep2.setTitre(t2);
+
+		ep3.setJukebox(j2);
+		ep3.setMembre(m2);
+		ep3.setTitre(t2);
+
+		enchereDao.save(eg1);
+		enchereDao.save(eg2);
+		enchereDao.save(ep1);
+		enchereDao.save(ep2);
+		enchereDao.save(ep3);
+
+		Assert.assertEquals(2, enchereDao.findAllEnchereTermineeByMembre(m1).size());
+
+		Assert.assertEquals(1, enchereDao.findAllEnchereTermineeByMembre(m2).size());
+
+		Assert.assertEquals(0, enchereDao.findAllEnchereTermineeByMembre(m3).size());
+
 	}
 
 	@Test
 	public void testFindAllEnchereNotTermineeByMembre() {
-		Assert.assertEquals(3, enchereDao.findAllEnchereNotTermineeByMembre((Membre) utilisateurDao.findById(7L).orElse(null)).size());
+		EnchereGratuite eg1 = new EnchereGratuite(LocalDateTime.now(), 1);
+		EnchereGratuite eg2 = new EnchereGratuite(LocalDateTime.now(), 2);
+		EncherePayante ep1 = new EncherePayante(LocalDateTime.now(), 1);
+		EncherePayante ep2 = new EncherePayante(LocalDateTime.now(), 2);
+		EncherePayante ep3 = new EncherePayante(LocalDateTime.now(), 3);
+
+		Membre m1 = new Membre("Maxime", 10, "test");
+		Membre m2 = new Membre("Josse", 15, "test");
+		Membre m3 = new Membre("Guillaume", 20, "test");
+		utilisateurDao.save(m1);
+		utilisateurDao.save(m2);
+		utilisateurDao.save(m3);
+
+		Titre t1 = new Titre("Offender", "Dimension", "https://www.youtube.com/watch?v=d2u3BRGd2rs");
+		Titre t2 = new Titre("Saviour", "Dimension", "https://www.youtube.com/watch?v=R0ppOs2o-cw");
+		Titre t3 = new Titre("Organ", "Dimension", "https://www.youtube.com/watch?v=GJQZrANyNJY");
+		titreDao.save(t1);
+		titreDao.save(t2);
+		titreDao.save(t3);
+
+		Jukebox j1 = new Jukebox("Bass music Jukebox", "123456789", TypeEnchere.GRATUITE);
+		Jukebox j2 = new Jukebox("Rock music Jukebox", "987654321", TypeEnchere.PAYANTE);
+		jukeboxDao.save(j1);
+		jukeboxDao.save(j2);
+
+		eg1.setTerminee(true);
+		ep1.setTerminee(true);
+
+		eg1.setJukebox(j1);
+		eg1.setMembre(m1);
+		eg1.setTitre(t1);
+
+		eg2.setJukebox(j1);
+		eg2.setMembre(m1);
+		eg2.setTitre(t1);
+
+		ep1.setJukebox(j1);
+		ep1.setMembre(m1);
+		ep1.setTitre(t2);
+
+		ep2.setJukebox(j2);
+		ep2.setMembre(m2);
+		ep2.setTitre(t2);
+
+		ep3.setJukebox(j2);
+		ep3.setMembre(m2);
+		ep3.setTitre(t2);
+
+		enchereDao.save(eg1);
+		enchereDao.save(eg2);
+		enchereDao.save(ep1);
+		enchereDao.save(ep2);
+		enchereDao.save(ep3);
+
+		Assert.assertEquals(1, enchereDao.findAllEnchereNotTermineeByMembre(m1).size());
+
+		Assert.assertEquals(2, enchereDao.findAllEnchereNotTermineeByMembre(m2).size());
+
+		Assert.assertEquals(0, enchereDao.findAllEnchereNotTermineeByMembre(m3).size());
 	}
 
 }
